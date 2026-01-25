@@ -2,11 +2,13 @@
 
 import Link from "next/link";
 import { Poppins } from "next/font/google";
-import React from "react";
+import React, { useState } from "react";
 import { usePathname } from "next/navigation";
 
 import { cn } from "@/lib/utils";
 import { Button } from "./ui/button";
+import NavbarSidebar from "./NavbarSidebar";
+import { MenuIcon } from "lucide-react";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -45,45 +47,63 @@ const navbarItems: NavbarItemProps[] = [
 
 const Navbar = () => {
   const pathname = usePathname();
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   return (
-    <nav className="h-20 flex items-center justify-between border-b font-medium bg-white sticky top-0 z-50">
-      <Link href="/" className="pl-12">
-        <span
-          className={cn(
-            "text-2xl lg:text-5xl font-semibold",
-            poppins.className,
-          )}>
-          eNearby
-        </span>
-      </Link>
+    <>
+      <nav className="h-20 flex items-center justify-between border-b font-medium bg-white sticky top-0 z-50">
+        <Link href="/" className="pl-12">
+          <span
+            className={cn(
+              "text-2xl lg:text-5xl font-semibold",
+              poppins.className,
+            )}>
+            eNearby
+          </span>
+        </Link>
 
-      <div className="items-center gap-2 hidden lg:flex">
-        {navbarItems.map((item) => (
-          <NavbarItem
-            key={item.href}
-            href={item.href}
-            isActive={pathname === item.href}>
-            {item.children}
-          </NavbarItem>
-        ))}
-      </div>
+        <div className="items-center gap-2 hidden lg:flex">
+          {navbarItems.map((item) => (
+            <NavbarItem
+              key={item.href}
+              href={item.href}
+              isActive={pathname === item.href}>
+              {item.children}
+            </NavbarItem>
+          ))}
+        </div>
 
-      <div className="hidden lg:flex h-full">
-        <Button
-          asChild
-          variant="secondary"
-          className="border-l border-t-0 border-r-0 border-b-0 rounded-none h-full px-12 bg-background text-lg hover:bg-pink-400 transition-colors">
-          <Link href="/sign-in">Log In</Link>
-        </Button>
-        <Button
-          asChild
-          variant="secondary"
-          className="border-l border-t-0 border-r-0 border-b-0 rounded-none h-full px-12 bg-primary text-secondary text-lg hover:bg-pink-400 hover:text-primary transition-colors">
-          <Link href="/sign-up">Start Selling</Link>
-        </Button>
-      </div>
-    </nav>
+        <div className="hidden lg:flex h-full">
+          <Button
+            asChild
+            variant="secondary"
+            className="border-l border-t-0 border-r-0 border-b-0 rounded-none h-full px-12 bg-background text-lg hover:bg-pink-400 transition-colors">
+            <Link href="/sign-in">Log In</Link>
+          </Button>
+          <Button
+            asChild
+            variant="secondary"
+            className="border-l border-t-0 border-r-0 border-b-0 rounded-none h-full px-12 bg-primary text-secondary text-lg hover:bg-pink-400 hover:text-primary transition-colors">
+            <Link href="/sign-up">Start Selling</Link>
+          </Button>
+        </div>
+
+        <div className="flex lg:hidden items-center justify-center pr-4">
+          <Button
+            variant="ghost"
+            className="size-12 border-transparent bg-background"
+            onClick={() => setIsSidebarOpen(true)}>
+            <MenuIcon className="size-6" />
+          </Button>
+        </div>
+      </nav>
+
+      <NavbarSidebar
+        items={navbarItems}
+        open={isSidebarOpen}
+        onOpenChange={setIsSidebarOpen}
+      />
+    </>
   );
 };
 
