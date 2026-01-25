@@ -37,15 +37,16 @@ const NavbarSidebar = ({ items, open, onOpenChange }: Props) => {
             <Link
               key={item.href}
               href={item.href}
-              className="w-full text-left p-4 hover:bg-primary hover:text-secondary flex items-center justify-between">
+              className="w-full text-left p-4 hover:bg-primary hover:text-secondary flex items-center justify-between"
+              onClick={() => onOpenChange(false)}>
               {item.children}
               <ChevronRight />
             </Link>
           ))}
-          <div className="text-left border-t border-b rounded-none w-full p-4 bg-transparent text-base hover:bg-pink-400 hover:text-primary transition-colors mt-4">
+          <div className="text-left border-t rounded-none w-full p-4 bg-transparent text-base hover:bg-primary hover:text-secondary cursor-pointer transition-colors mt-4">
             <Link href="/sign-in">Log In</Link>
           </div>
-          <div className="text-left border-t border-b rounded-none w-full p-4 bg-primary text-secondary text-base hover:bg-pink-400 hover:text-primary transition-colors">
+          <div className="text-left border-b rounded-none w-full p-4 bg-transparent text-primary text-base hover:bg-pink-400 hover:text-primary cursor-pointer transition-colors">
             <Link href="/sign-up">Start Selling</Link>
           </div>
         </ScrollArea>
