@@ -8,6 +8,8 @@ import {
   SheetTitle,
 } from "./ui/sheet";
 import { ChevronRight, Copyright } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { poppins } from "./Navbar";
 
 interface NavbarItem {
   href: string;
@@ -28,7 +30,7 @@ const NavbarSidebar = ({ items, open, onOpenChange }: Props) => {
         className="bg-background/70 backdrop-blur-lg w-[75vw]">
         <SheetHeader className="p-4 border-b ">
           <div className="text-2xl font-bold">
-            <SheetTitle>eNearby</SheetTitle>
+            <SheetTitle className={cn(poppins.className)}>eNearby</SheetTitle>
           </div>
         </SheetHeader>
 
@@ -50,11 +52,9 @@ const NavbarSidebar = ({ items, open, onOpenChange }: Props) => {
             <Link href="/sign-up">Start Selling</Link>
           </div>
         </ScrollArea>
-        <SheetFooter className="p-0 gap-0">
-          <span className="flex items-center gap-1 text-sm my-12 p-4 text-muted-foreground">
-            <Copyright className="size-3" /> 2026
-            <span className="font-bold text-primary">eNearby</span>
-            ecomms.
+        <SheetFooter className="px-4 py-12 ">
+          <span className={cn(poppins.className, "font-medium")}>
+            eNearby, Inc
           </span>
         </SheetFooter>
       </SheetContent>

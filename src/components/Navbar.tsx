@@ -10,7 +10,7 @@ import { Button } from "./ui/button";
 import NavbarSidebar from "./NavbarSidebar";
 import { MenuIcon } from "lucide-react";
 
-const poppins = Poppins({
+export const poppins = Poppins({
   subsets: ["latin"],
   weight: ["700"],
 });
