@@ -1,8 +1,11 @@
+"use client";
+
 import Link from "next/link";
 import { Poppins } from "next/font/google";
+import React from "react";
+import { usePathname } from "next/navigation";
 
 import { cn } from "@/lib/utils";
-import React, { Children } from "react";
 import { Button } from "./ui/button";
 
 const poppins = Poppins({
@@ -21,10 +24,11 @@ const NavbarItem = ({ href, children, isActive }: NavbarItemProps) => {
     <Button
       asChild
       variant="outline"
+      size="lg"
       className={cn(
         "rounded-full text-lg bg-background px-3.5 border-transparent hover:bg-background hover:border-primary ",
         isActive &&
-          "bg-primary text-secondary hover:bg-primary hover:border-primary",
+          "bg-primary text-secondary hover:bg-primary/80 hover:border-primary/80 hover:text-secondary",
       )}>
       <Link href={href}>{children}</Link>
     </Button>
@@ -40,8 +44,10 @@ const navbarItems: NavbarItemProps[] = [
 ];
 
 const Navbar = () => {
+  const pathname = usePathname();
+
   return (
-    <nav className="h-20 flex items-center justify-between border-b font-medium bg-white">
+    <nav className="h-20 flex items-center justify-between border-b font-medium bg-white sticky top-0 z-50">
       <Link href="/" className="pl-12">
         <span
           className={cn(
@@ -54,23 +60,28 @@ const Navbar = () => {
 
       <div className="items-center gap-2 hidden lg:flex">
         {navbarItems.map((item) => (
-          <NavbarItem key={item.href} href={item.href}>
+          <NavbarItem
+            key={item.href}
+            href={item.href}
+            isActive={pathname === item.href}>
             {item.children}
           </NavbarItem>
         ))}
       </div>
 
-      <div className="h-full flex items-center">
-        <Link
-          href="#"
-          className="h-full flex items-center justify-center px-12 border-l hover:bg-primary hover:text-secondary transition-colors">
-          Sign In
-        </Link>
-        <Link
-          href="#"
-          className="h-full flex items-center justify-center bg-pink-400 border-l px-12 hover:bg-pink-400/80 transition-colors">
-          Sign Up
-        </Link>
+      <div className="hidden lg:flex h-full">
+        <Button
+          asChild
+          variant="secondary"
+          className="border-l border-t-0 border-r-0 border-b-0 rounded-none h-full px-12 bg-background text-lg hover:bg-pink-400 transition-colors">
+          <Link href="/sign-in">Log In</Link>
+        </Button>
+        <Button
+          asChild
+          variant="secondary"
+          className="border-l border-t-0 border-r-0 border-b-0 rounded-none h-full px-12 bg-primary text-secondary text-lg hover:bg-pink-400 hover:text-primary transition-colors">
+          <Link href="/sign-up">Start Selling</Link>
+        </Button>
       </div>
     </nav>
   );

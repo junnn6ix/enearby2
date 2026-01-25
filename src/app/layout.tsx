@@ -22,7 +22,10 @@ export default function RootLayout({
   return (
     <>
       <html lang="en" suppressHydrationWarning>
-        <body className={`${dmSans.className} antialiased`}>{children}</body>
+        <body className={`${dmSans.className} antialiased`}>
+          <Navbar />
+          {children}
+        </body>
       </html>
     </>
   );
