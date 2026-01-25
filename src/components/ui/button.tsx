@@ -25,7 +25,7 @@ const buttonVariants = cva(
           "bg-destructive text-white hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:-translate-x-[4px] hover:-translate-y-[4px] border dark:border-primary dark:shadow-primary cursor-pointer rounded-0",
       },
       size: {
-        default: "h-12 px-6 has-[>svg]:px-3",
+        default: "h-10 px-6 has-[>svg]:px-3",
         xs: "h-8 gap-1 rounded-md px-4 text-xs has-[>svg]:px-1.5 [&_svg:not([class*='size-'])]:size-3",
         sm: "h-10 rounded-md gap-1.5 px-4 has-[>svg]:px-2.5",
         lg: "h-12 rounded-md px-6 has-[>svg]:px-4",
