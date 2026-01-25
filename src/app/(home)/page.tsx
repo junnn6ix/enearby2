@@ -7,7 +7,7 @@ import { Plus, Trash } from "lucide-react";
 
 export default function Home() {
   return (
-    <div className="flex flex-col gap-6 py-12 max-w-2xl mx-auto">
+    <div className="flex flex-col gap-6 py-12 ">
       <h1 className="text-6xl tracking-tighter font-extrabold">Lorem ipsum</h1>
       <p className="text-lg line-clamp-3 max-w-2xl">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit sequi
