@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 import { Button } from "./ui/button";
 import NavbarSidebar from "./NavbarSidebar";
 import { MenuIcon } from "lucide-react";
+import { ModeToggle } from "./mode-toggle";
 
 export const poppins = Poppins({
   subsets: ["latin"],
@@ -28,9 +29,9 @@ const NavbarItem = ({ href, children, isActive }: NavbarItemProps) => {
       variant="outline"
       size="lg"
       className={cn(
-        "rounded-full text-lg bg-background px-3.5 border-transparent hover:bg-background hover:border-primary ",
+        "rounded-full text-lg bg-background dark:bg-background px-3.5 border-transparent dark:border-transparent hover:bg-background hover:border-primary dark:hover:border-primary dark:hover:bg-background dark:hover:text-white ",
         isActive &&
-          "bg-primary text-secondary hover:bg-primary/80 hover:border-primary/80 hover:text-secondary",
+          "bg-primary text-secondary hover:bg-primary/80 hover:border-primary/80 hover:text-secondary dark:text-black dark:bg-white dark:hover:bg-white dark:hover:text-black",
       )}>
       <Link href={href}>{children}</Link>
     </Button>
@@ -51,7 +52,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="h-20 flex items-center justify-between border-b font-medium bg-white sticky top-0 z-50">
+      <nav className="h-20 flex items-center justify-between border-b font-medium bg-background sticky top-0 z-50">
         <Link href="/" className="pl-12">
           <span
             className={cn(
@@ -73,7 +74,8 @@ const Navbar = () => {
           ))}
         </div>
 
-        <div className="hidden lg:flex h-full">
+        <div className="hidden lg:flex items-center h-full">
+          <ModeToggle />
           <Button
             asChild
             variant="secondary"
@@ -83,7 +85,7 @@ const Navbar = () => {
           <Button
             asChild
             variant="secondary"
-            className="border-l border-t-0 border-r-0 border-b-0 rounded-none h-full px-12 bg-primary text-secondary text-lg hover:bg-pink-400 hover:text-primary transition-colors">
+            className="border-l border-t-0 border-r-0 border-b-0 rounded-none h-full px-12 bg-black text-white dark:bg-white dark:text-black text-lg hover:bg-pink-400 dark:hover:bg-pink-400 hover:text-black dark:hover:text-black transition-colors">
             <Link href="/sign-up">Start Selling</Link>
           </Button>
         </div>
