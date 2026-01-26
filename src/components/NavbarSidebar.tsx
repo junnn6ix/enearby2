@@ -10,6 +10,7 @@ import {
 import { ChevronRight, Copyright } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { poppins } from "./Navbar";
+import { ModeToggle } from "./mode-toggle";
 
 interface NavbarItem {
   href: string;

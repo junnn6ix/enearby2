@@ -90,10 +90,11 @@ const Navbar = () => {
           </Button>
         </div>
 
-        <div className="flex lg:hidden items-center justify-center pr-4">
+        <div className="h-full flex lg:hidden items-center justify-center pr-4">
+          <ModeToggle />
           <Button
             variant="ghost"
-            className="size-12 border-transparent bg-background"
+            className="size-12 border-transparent bg-background h-full w-14"
             onClick={() => setIsSidebarOpen(true)}>
             <MenuIcon className="size-6" />
           </Button>
