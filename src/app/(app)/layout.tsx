@@ -7,6 +7,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { ThemeProvider } from "@/components/theme-provider";
 import SearchFilters from "./(home)/search-filters/SearchFilters";
+import { Category } from "@/payload-types";
 
 const dmSans = DM_Sans({
   variable: "--font-dm-sans",
@@ -30,12 +31,26 @@ export default async function RootLayout({
 
   const data = await payload.find({
     collection: "categories",
-    depth: 1,
+    depth: 1, // populate subcategories, subcategories.[0] will be a type of 'Category'
     where: {
       parent: {
         exists: false,
       },
     },
+  });
+
+  const formatedData = data.docs.map((doc) => ({
+    ...doc,
+    subcategories: (doc.subcategories?.docs ?? []).map((doc) => ({
+      // because of 'depth: 1', we are confident 'doc' will be a type of 'Category'
+      ...(doc as Category),
+      subcategories: undefined,
+    })),
+  }));
+
+  console.log({
+    data,
+    formatedData,
   });
 
   return (
@@ -48,7 +63,7 @@ export default async function RootLayout({
             enableSystem
             disableTransitionOnChange>
             <Navbar />
-            <SearchFilters data={data} />
+            <SearchFilters data={formatedData} />
             {children}
             <Footer />
           </ThemeProvider>

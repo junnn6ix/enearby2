@@ -13,9 +13,11 @@ const SearchInput = ({ disabled }: Props) => {
         <Input
           disabled={disabled}
           placeholder="Search..."
-          className="pl-10 py-4 focus-visible:translate-x-0 focus-visible:translate-y-0 focus-visible:shadow-none dark:focus-visible:shadow-none dark:focus-visible:translate-x-0 dark:focus-visible:translate-y-0 focus-visible:ring-1 dark:focus-visible:ring-1"
+          className="pl-10 focus-visible:translate-x-0 focus-visible:translate-y-0 focus-visible:shadow-none dark:focus-visible:shadow-none dark:focus-visible:translate-x-0 dark:focus-visible:translate-y-0 focus-visible:ring-1 dark:focus-visible:ring-1"
         />
       </div>
+      {/* TODO: All Categories btn  */}
+      {/* TODO: Category filter */}
     </div>
   );
 };
