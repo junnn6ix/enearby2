@@ -39,6 +39,7 @@ export default async function RootLayout({
         exists: false,
       },
     },
+    sort: "name",
   });
 
   const formatedData: CustomCategory[] = data.docs.map((doc) => ({

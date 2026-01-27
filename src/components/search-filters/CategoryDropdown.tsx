@@ -44,7 +44,7 @@ const CategoryDropdown = ({
           variant="elevated"
           className={cn(
             "rounded-full border-transparent dark:border-transparent hover:border-primary dark:hover:border-primary h-11 px-4 hover:bg-background",
-            isActive && isNavigationHovered && "bg-background border-primary",
+            isActive && "bg-background border-primary dark:border-primary",
             isOpen &&
               "bg-background border-primary dark:border-primary shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] -translate-x-[4px] -translate-y-[4px] border dark:bg-background dark:shadow-primary cursor-pointer",
           )}>
