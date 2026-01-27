@@ -63,7 +63,7 @@ const Navbar = () => {
           </span>
         </Link>
 
-        <div className="items-center gap-2 hidden lg:flex">
+        <div className="items-center gap-2 hidden md:hidden lg:flex">
           {navbarItems.map((item) => (
             <NavbarItem
               key={item.href}

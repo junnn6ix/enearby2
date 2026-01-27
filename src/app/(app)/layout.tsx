@@ -1,9 +1,12 @@
+import configPromise from "@payload-config";
+import { getPayload } from "payload";
 import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { ThemeProvider } from "@/components/theme-provider";
+import SearchFilters from "./(home)/search-filters/SearchFilters";
 
 const dmSans = DM_Sans({
   variable: "--font-dm-sans",
@@ -16,11 +19,25 @@ export const metadata: Metadata = {
   description: "Enearby",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const payload = await getPayload({
+    config: configPromise,
+  });
+
+  const data = await payload.find({
+    collection: "categories",
+    depth: 1,
+    where: {
+      parent: {
+        exists: false,
+      },
+    },
+  });
+
   return (
     <>
       <html lang="en" suppressHydrationWarning>
@@ -31,6 +48,7 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange>
             <Navbar />
+            <SearchFilters data={data} />
             {children}
             <Footer />
           </ThemeProvider>
