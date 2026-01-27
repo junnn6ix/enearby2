@@ -54,6 +54,13 @@ const CategoriesSidebar = ({ open, onOpenChange, data }: Props) => {
     }
   };
 
+  const handleBackClick = () => {
+    if (parentCategories) {
+      setParentCategories(null);
+      setSelectedCategory(null);
+    }
+  };
+
   return (
     <Sheet open={open} onOpenChange={handleOpenChange}>
       <SheetContent
@@ -68,7 +75,7 @@ const CategoriesSidebar = ({ open, onOpenChange, data }: Props) => {
           {parentCategories && (
             <button
               className="w-full text-left p-4 hover:bg-primary hover:text-secondary flex items-center text-base font-medium"
-              onClick={() => {}}>
+              onClick={handleBackClick}>
               <ChevronLeft className="size-5 mr-2" />
               Back
             </button>
