@@ -6,6 +6,7 @@ import CategoryDropdown from "./CategoryDropdown";
 import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
 import { ListFilterIcon } from "lucide-react";
+import CategoriesSidebar from "../CategoriesSidebar";
 
 interface Props {
   data: CustomCategory[];
@@ -60,6 +61,13 @@ function Categories({ data }: Props) {
   }, [data.length]);
   return (
     <div className="relative w-full ">
+      {/* categories sidebar */}
+      <CategoriesSidebar
+        open={isSidebarOpen}
+        onOpenChange={setIsSidebarOpen}
+        data={data}
+      />
+
       {/* hidden div to measure all items */}
       <div
         ref={measureRef}
@@ -98,6 +106,7 @@ function Categories({ data }: Props) {
 
         <div ref={viewAllRef} className="shrink-0 ">
           <Button
+            onClick={() => setIsSidebarOpen(true)}
             variant="elevated"
             className={cn(
               "rounded-full border-transparent dark:border-transparent hover:border-primary dark:hover:border-primary h-11 px-4 hover:bg-background",

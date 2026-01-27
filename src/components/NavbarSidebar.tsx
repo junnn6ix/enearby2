@@ -30,9 +30,9 @@ const NavbarSidebar = ({ items, open, onOpenChange }: Props) => {
         side="right"
         className="bg-background/70 backdrop-blur-lg w-[75vw]">
         <SheetHeader className="p-4 border-b ">
-          <div className="text-2xl font-bold">
-            <SheetTitle className={cn(poppins.className)}>eNearby</SheetTitle>
-          </div>
+          <SheetTitle className={`${poppins.className} text-2xl font-bold`}>
+            eNearby
+          </SheetTitle>
         </SheetHeader>
 
         <ScrollArea className="flex flex-col overflow-y-auto h-full pb-2">
@@ -53,10 +53,8 @@ const NavbarSidebar = ({ items, open, onOpenChange }: Props) => {
             <Link href="/sign-up">Start Selling</Link>
           </div>
         </ScrollArea>
-        <SheetFooter className="px-4 py-12 ">
-          <span className={cn(poppins.className, "font-medium")}>
-            eNearby, Inc
-          </span>
+        <SheetFooter className={`${poppins.className} px-4 py-12`}>
+          eNearby, Inc
         </SheetFooter>
       </SheetContent>
     </Sheet>
