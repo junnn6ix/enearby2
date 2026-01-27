@@ -16,7 +16,7 @@ const SubcategoryMenu = ({ category, isOpen, position }: Props) => {
     return null;
   }
 
-  const backgroundColor = category.color || "bg-background";
+  const backgroundColor = category.color || "#fff" || "dark:#000";
   return (
     <div
       className="fixed z-10"
