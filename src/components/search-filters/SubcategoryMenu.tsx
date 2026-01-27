@@ -1,8 +1,9 @@
 import { Category } from "@/payload-types";
+import { CustomCategory } from "@/types";
 import Link from "next/link";
 
 interface Props {
-  category: Category;
+  category: CustomCategory;
   isOpen: boolean;
   position: { top: number; left: number };
 }
@@ -16,7 +17,7 @@ const SubcategoryMenu = ({ category, isOpen, position }: Props) => {
     return null;
   }
 
-  const backgroundColor = category.color || "#fff" || "dark:#000";
+  const backgroundColor = category.color || "#fff";
   return (
     <div
       className="fixed z-10"
@@ -35,7 +36,7 @@ const SubcategoryMenu = ({ category, isOpen, position }: Props) => {
           {category.subcategories?.map((subcategory: Category) => (
             <Link
               key={subcategory.slug}
-              href="#"
+              href={`/${category.slug}/${subcategory.slug}`}
               className="w-full text-left p-4 hover:bg-black hover:text-white flex justify-between items-center underline font-medium dark:text-black dark:hover:text-white">
               {subcategory.name}
             </Link>
