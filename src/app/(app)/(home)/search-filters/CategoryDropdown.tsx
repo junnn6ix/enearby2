@@ -43,7 +43,7 @@ const CategoryDropdown = ({
         <Button
           variant="elevated"
           className={cn(
-            "rounded-full border-transparent hover:border-primary h-11 px-4 hover:bg-background",
+            "rounded-full border-transparent dark:border-transparent hover:border-primary dark:hover:border-primary h-11 px-4 hover:bg-background",
             isActive && isNavigationHovered && "bg-background border-primary",
           )}>
           {category.name}
