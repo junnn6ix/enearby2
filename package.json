@@ -10,7 +10,8 @@
     "lint": "next lint",
     "check-types": "tsc --noEmit",
     "generate:types": "payload generate:types",
-    "db:fresh": "payload migrate:fresh"
+    "db:fresh": "payload migrate:fresh",
+    "db:seed": "bun run src/seed.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

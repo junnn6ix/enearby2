@@ -6,8 +6,8 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { ThemeProvider } from "@/components/theme-provider";
-import SearchFilters from "./(home)/search-filters/SearchFilters";
 import { Category } from "@/payload-types";
+import SearchFilters from "@/components/search-filters/SearchFilters";
 
 const dmSans = DM_Sans({
   variable: "--font-dm-sans",
@@ -32,6 +32,7 @@ export default async function RootLayout({
   const data = await payload.find({
     collection: "categories",
     depth: 1, // populate subcategories, subcategories.[0] will be a type of 'Category'
+    limit: 100, // Fetch all categories (default is 10)
     where: {
       parent: {
         exists: false,
