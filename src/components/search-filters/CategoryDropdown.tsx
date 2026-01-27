@@ -2,14 +2,14 @@
 
 import { useRef, useState } from "react";
 
-import { Category } from "@/payload-types";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { useDropdownPosition } from "@/hooks/use-dropdown-position";
 import SubcategoryMenu from "./SubcategoryMenu";
+import { CustomCategory } from "@/types";
 
 interface Props {
-  category: Category;
+  category: CustomCategory;
   isActive?: boolean;
   isNavigationHovered?: boolean;
 }

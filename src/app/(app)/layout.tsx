@@ -8,6 +8,7 @@ import Footer from "@/components/Footer";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Category } from "@/payload-types";
 import SearchFilters from "@/components/search-filters/SearchFilters";
+import { CustomCategory } from "@/types";
 
 const dmSans = DM_Sans({
   variable: "--font-dm-sans",
@@ -40,7 +41,7 @@ export default async function RootLayout({
     },
   });
 
-  const formatedData = data.docs.map((doc) => ({
+  const formatedData: CustomCategory[] = data.docs.map((doc) => ({
     ...doc,
     subcategories: (doc.subcategories?.docs ?? []).map((doc) => ({
       // because of 'depth: 1', we are confident 'doc' will be a type of 'Category'
@@ -48,11 +49,6 @@ export default async function RootLayout({
       subcategories: undefined,
     })),
   }));
-
-  console.log({
-    data,
-    formatedData,
-  });
 
   return (
     <>
