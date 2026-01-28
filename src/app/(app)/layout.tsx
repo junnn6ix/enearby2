@@ -4,7 +4,9 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { ThemeProvider } from "@/components/theme-provider";
-import SearchFilters from "@/components/search-filters/SearchFilters";
+import SearchFilters, {
+  SearchFiltersSkeleton,
+} from "@/components/search-filters/SearchFilters";
 import { TRPCReactProvider } from "@/trpc/client";
 import { getQueryClient, trpc } from "@/trpc/server";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
@@ -41,7 +43,7 @@ export default async function RootLayout({
             <TRPCReactProvider>
               <Navbar />
               <HydrationBoundary state={dehydrate(queryClient)}>
-                <Suspense fallback={<div>Loading...</div>}>
+                <Suspense fallback={<SearchFiltersSkeleton />}>
                   <SearchFilters />
                 </Suspense>
               </HydrationBoundary>

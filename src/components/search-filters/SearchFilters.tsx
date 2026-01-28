@@ -20,3 +20,14 @@ const SearchFilters = () => {
 };
 
 export default SearchFilters;
+
+export const SearchFiltersSkeleton = () => {
+  return (
+    <div className="px-8 md:px-12 lg:px-24 xl:px-48 py-4 border-b flex flex-col gap-4 w-full">
+      <SearchInput disabled />
+      <div className="hidden lg:block">
+        <div className="h-11" />
+      </div>
+    </div>
+  );
+};
