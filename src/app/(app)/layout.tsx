@@ -1,15 +1,14 @@
-import configPromise from "@payload-config";
-import { getPayload } from "payload";
 import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { ThemeProvider } from "@/components/theme-provider";
-import { Category } from "@/payload-types";
 import SearchFilters from "@/components/search-filters/SearchFilters";
-import { CustomCategory } from "@/types";
 import { TRPCReactProvider } from "@/trpc/client";
+import { getQueryClient, trpc } from "@/trpc/server";
+import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
+import { Suspense } from "react";
 
 const dmSans = DM_Sans({
   variable: "--font-dm-sans",
@@ -27,30 +26,8 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const payload = await getPayload({
-    config: configPromise,
-  });
-
-  const data = await payload.find({
-    collection: "categories",
-    depth: 1, // populate subcategories, subcategories.[0] will be a type of 'Category'
-    limit: 100, // Fetch all categories (default is 10)
-    where: {
-      parent: {
-        exists: false,
-      },
-    },
-    sort: "name",
-  });
-
-  const formatedData: CustomCategory[] = data.docs.map((doc) => ({
-    ...doc,
-    subcategories: (doc.subcategories?.docs ?? []).map((doc) => ({
-      // because of 'depth: 1', we are confident 'doc' will be a type of 'Category'
-      ...(doc as Category),
-      subcategories: undefined,
-    })),
-  }));
+  const queryClient = getQueryClient();
+  void queryClient.prefetchQuery(trpc.categories.getMany.queryOptions());
 
   return (
     <>
@@ -63,7 +40,11 @@ export default async function RootLayout({
             disableTransitionOnChange>
             <TRPCReactProvider>
               <Navbar />
-              <SearchFilters data={formatedData} />
+              <HydrationBoundary state={dehydrate(queryClient)}>
+                <Suspense fallback={<div>Loading...</div>}>
+                  <SearchFilters />
+                </Suspense>
+              </HydrationBoundary>
               {children}
               <Footer />
             </TRPCReactProvider>
