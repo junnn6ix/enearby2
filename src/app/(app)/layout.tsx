@@ -9,6 +9,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { Category } from "@/payload-types";
 import SearchFilters from "@/components/search-filters/SearchFilters";
 import { CustomCategory } from "@/types";
+import { TRPCReactProvider } from "@/trpc/client";
 
 const dmSans = DM_Sans({
   variable: "--font-dm-sans",
@@ -60,10 +61,12 @@ export default async function RootLayout({
             defaultTheme="system"
             enableSystem
             disableTransitionOnChange>
-            <Navbar />
-            <SearchFilters data={formatedData} />
-            {children}
-            <Footer />
+            <TRPCReactProvider>
+              <Navbar />
+              <SearchFilters data={formatedData} />
+              {children}
+              <Footer />
+            </TRPCReactProvider>
           </ThemeProvider>
         </body>
       </html>
