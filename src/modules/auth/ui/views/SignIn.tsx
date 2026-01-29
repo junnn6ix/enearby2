@@ -6,7 +6,6 @@ import { useForm } from "react-hook-form";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -14,31 +13,43 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { registerSchema } from "../../types";
+import { loginSchema, registerSchema } from "../../types";
 import { z } from "zod";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { poppins } from "@/components/Navbar";
+import { useTRPC } from "@/trpc/client";
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 const SignIn = () => {
-  const form = useForm<z.infer<typeof registerSchema>>({
-    resolver: zodResolver(registerSchema),
+  const router = useRouter();
+  const trpc = useTRPC();
+  const login = useMutation(
+    trpc.auth.login.mutationOptions({
+      onError: (error) => {
+        toast.error(error.message);
+      },
+      onSuccess: () => {
+        toast.success("Login successful");
+        router.push("/");
+      },
+    }),
+  );
+
+  const form = useForm<z.infer<typeof loginSchema>>({
+    resolver: zodResolver(loginSchema),
     // mode: "all",
     defaultValues: {
       email: "",
-      username: "",
       password: "",
     },
   });
 
-  const onSubmit = (values: z.infer<typeof registerSchema>) => {
-    console.log(values);
+  const onSubmit = (values: z.infer<typeof loginSchema>) => {
+    login.mutate(values);
   };
-
-  const username = form.watch("username");
-  const usernameErrors = form.formState.errors.username;
-
-  const showPreview = username && !usernameErrors;
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-6">
@@ -66,7 +77,9 @@ const SignIn = () => {
               </Button>
             </div>
 
-            <h1 className="text-4xl font-medium">Hi!, Welcome Back</h1>
+            <h1 className="text-4xl font-medium">
+              Hi, Welcome back to eNearby!
+            </h1>
 
             <div className="flex flex-col gap-4">
               <FormField
@@ -102,15 +115,16 @@ const SignIn = () => {
               />
 
               <Button
+                disabled={login.isPending}
                 type="submit"
                 variant="elevated"
                 className="mt-6 bg-black text-secondary dark:text-primary hover:bg-pink-400 dark:hover:bg-pink-400 hover:text-black dark:hover:text-black">
-                Sign In
+                Log in
               </Button>
             </div>
 
             <span className="text-xs text-muted-foreground flex items-center justify-center gap-2 underline -mb-2 lg:-mb-6">
-              <Link href="#">License Agreement</Link>
+              <Link href="#">License Agreement</Link>&
               <Link href="#">Privacy Policy</Link>
             </span>
           </form>

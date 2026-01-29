@@ -3,7 +3,6 @@ import Navbar from "@/components/Navbar";
 import SearchFilters, {
   SearchFiltersSkeleton,
 } from "@/components/search-filters/SearchFilters";
-import { TRPCReactProvider } from "@/trpc/client";
 import { getQueryClient, trpc } from "@/trpc/server";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import { Suspense } from "react";
@@ -19,14 +18,12 @@ const Layout = async ({ children }: Props) => {
     <div className="">
       <Navbar />
       <div className="flex flex-col min-h-screen">
-        <TRPCReactProvider>
-          <HydrationBoundary state={dehydrate(queryClient)}>
-            <Suspense fallback={<SearchFiltersSkeleton />}>
-              <SearchFilters />
-            </Suspense>
-          </HydrationBoundary>
-          <div className="mx-auto w-[95vw] lg:w-[90vw]">{children}</div>
-        </TRPCReactProvider>
+        <HydrationBoundary state={dehydrate(queryClient)}>
+          <Suspense fallback={<SearchFiltersSkeleton />}>
+            <SearchFilters />
+          </Suspense>
+        </HydrationBoundary>
+        <div className="mx-auto w-[95vw] lg:w-[90vw]">{children}</div>
       </div>
       <Footer />
     </div>

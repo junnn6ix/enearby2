@@ -1,1 +1,1 @@
-export const AUTH_COOKIE = "enearby-auth-token";
+export const AUTH_COOKIE = "payload-token";
