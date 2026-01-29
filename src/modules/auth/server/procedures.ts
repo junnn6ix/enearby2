@@ -3,6 +3,7 @@ import { baseProcedure, createTRPCRouter } from "@/trpc/init";
 import { TRPCError } from "@trpc/server";
 import { AUTH_COOKIE } from "../constants";
 import { loginSchema, registerSchema } from "../types";
+import { generateAuthCookie } from "../utils";
 
 export const authRouter = createTRPCRouter({
   session: baseProcedure.query(async ({ ctx }) => {
@@ -73,15 +74,9 @@ export const authRouter = createTRPCRouter({
         });
       }
 
-      const cookies = await getCookies();
-      cookies.set({
-        name: AUTH_COOKIE,
+      await generateAuthCookie({
+        prefix: ctx.db.config.cookiePrefix,
         value: data.token,
-        httpOnly: true,
-        path: "/",
-        // TODO: ensure cross-domain cookie sharing
-        // enearby.com -> initial cookie
-        // neckjun.enearby.com -> subdomain cookie (cookie does not exist here)
       });
     }),
 
@@ -101,15 +96,9 @@ export const authRouter = createTRPCRouter({
       });
     }
 
-    const cookies = await getCookies();
-    cookies.set({
-      name: AUTH_COOKIE,
+    await generateAuthCookie({
+      prefix: ctx.db.config.cookiePrefix,
       value: data.token,
-      httpOnly: true,
-      path: "/",
-      // TODO: ensure cross-domain cookie sharing
-      // enearby.com -> initial cookie
-      // neckjun.enearby.com -> subdomain cookie (cookie does not exist here)
     });
 
     return data;
