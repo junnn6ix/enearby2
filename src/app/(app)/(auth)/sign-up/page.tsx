@@ -1,5 +1,7 @@
+import SignUp from "@/modules/auth/ui/views/SignUp";
+
 const Page = () => {
-  return <div className="">Sign Up Page</div>;
+  return <SignUp />;
 };
 
 export default Page;

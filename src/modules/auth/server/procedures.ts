@@ -1,8 +1,8 @@
 import { headers as getHeaders, cookies as getCookies } from "next/headers";
 import { baseProcedure, createTRPCRouter } from "@/trpc/init";
-import { z } from "zod";
 import { TRPCError } from "@trpc/server";
 import { AUTH_COOKIE } from "../constants";
+import { loginSchema, registerSchema } from "../types";
 
 export const authRouter = createTRPCRouter({
   session: baseProcedure.query(async ({ ctx }) => {
@@ -18,25 +18,7 @@ export const authRouter = createTRPCRouter({
   }),
 
   register: baseProcedure
-    .input(
-      z.object({
-        email: z.string().email(),
-        password: z.string(),
-        username: z
-          .string()
-          .min(3, "Username must be at least 3 characters long")
-          .max(63, "Username must be at most 63 characters long")
-          .regex(
-            /^[a-z0-9][a-z0-9-]*[a-z0-9]$/,
-            "Username must only contain lowercase letters, numbers, and underscores",
-          )
-          .refine(
-            (val) => !val.includes("--"),
-            "Username cannot contain consecutive hyphens",
-          )
-          .transform((val) => val.toLocaleLowerCase()),
-      }),
-    )
+    .input(registerSchema)
     .mutation(async ({ input, ctx }) => {
       await ctx.db.create({
         collection: "users",
@@ -74,40 +56,33 @@ export const authRouter = createTRPCRouter({
       });
     }),
 
-  login: baseProcedure
-    .input(
-      z.object({
-        email: z.string().email(),
-        password: z.string(),
-      }),
-    )
-    .mutation(async ({ input, ctx }) => {
-      const data = await ctx.db.login({
-        collection: "users",
-        data: {
-          email: input.email,
-          password: input.password,
-        },
+  login: baseProcedure.input(loginSchema).mutation(async ({ input, ctx }) => {
+    const data = await ctx.db.login({
+      collection: "users",
+      data: {
+        email: input.email,
+        password: input.password,
+      },
+    });
+
+    if (!data.token) {
+      throw new TRPCError({
+        code: "UNAUTHORIZED",
+        message: "Failed to login",
       });
+    }
 
-      if (!data.token) {
-        throw new TRPCError({
-          code: "UNAUTHORIZED",
-          message: "Failed to login",
-        });
-      }
+    const cookies = await getCookies();
+    cookies.set({
+      name: AUTH_COOKIE,
+      value: data.token,
+      httpOnly: true,
+      path: "/",
+      // TODO: ensure cross-domain cookie sharing
+      // enearby.com -> initial cookie
+      // neckjun.enearby.com -> subdomain cookie (cookie does not exist here)
+    });
 
-      const cookies = await getCookies();
-      cookies.set({
-        name: AUTH_COOKIE,
-        value: data.token,
-        httpOnly: true,
-        path: "/",
-        // TODO: ensure cross-domain cookie sharing
-        // enearby.com -> initial cookie
-        // neckjun.enearby.com -> subdomain cookie (cookie does not exist here)
-      });
-
-      return data;
-    }),
+    return data;
+  }),
 });
