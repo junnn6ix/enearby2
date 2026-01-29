@@ -1,3 +1,5 @@
+import Footer from "@/components/Footer";
+import Navbar from "@/components/Navbar";
 import SearchFilters, {
   SearchFiltersSkeleton,
 } from "@/components/search-filters/SearchFilters";
@@ -14,8 +16,9 @@ const Layout = async ({ children }: Props) => {
   const queryClient = getQueryClient();
   void queryClient.prefetchQuery(trpc.categories.getMany.queryOptions());
   return (
-    <div className="flex flex-col min-h-screen">
-      <div className="">
+    <div className="">
+      <Navbar />
+      <div className="flex flex-col min-h-screen">
         <TRPCReactProvider>
           <HydrationBoundary state={dehydrate(queryClient)}>
             <Suspense fallback={<SearchFiltersSkeleton />}>
@@ -25,6 +28,7 @@ const Layout = async ({ children }: Props) => {
           <div className="mx-auto w-[95vw] lg:w-[90vw]">{children}</div>
         </TRPCReactProvider>
       </div>
+      <Footer />
     </div>
   );
 };

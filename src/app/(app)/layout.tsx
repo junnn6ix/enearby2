@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import { ThemeProvider } from "@/components/theme-provider";
 
 const dmSans = DM_Sans({
@@ -30,9 +28,7 @@ export default async function RootLayout({
             defaultTheme="system"
             enableSystem
             disableTransitionOnChange>
-            <Navbar />
             {children}
-            <Footer />
           </ThemeProvider>
         </body>
       </html>
