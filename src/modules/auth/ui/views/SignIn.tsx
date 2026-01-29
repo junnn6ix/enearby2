@@ -20,7 +20,7 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { poppins } from "@/components/Navbar";
 
-const SignUp = () => {
+const SignIn = () => {
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
     // mode: "all",
@@ -60,38 +60,15 @@ const SignUp = () => {
                 asChild
                 variant="ghost"
                 className="text-base border-none underline">
-                <Link prefetch href="/sign-in">
-                  Sign In
+                <Link prefetch href="/sign-up">
+                  Sign Up
                 </Link>
               </Button>
             </div>
 
-            <h1 className="text-4xl font-medium">
-              Join over 1,598 creators earning money on eNearby
-            </h1>
+            <h1 className="text-4xl font-medium">Hi!, Welcome Back</h1>
 
             <div className="flex flex-col gap-4">
-              <FormField
-                control={form.control}
-                name="username"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Username</FormLabel>
-                    <FormControl>
-                      <Input placeholder="johndoe" {...field} />
-                    </FormControl>
-                    <FormDescription
-                      className={cn("hidden", showPreview && "block")}>
-                      Your store will be available at&nbsp;
-                      {/* TODO: use better method to generate preview url */}
-                      <strong>{username}</strong>
-                      .enearby.com
-                    </FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
               <FormField
                 control={form.control}
                 name="email"
@@ -128,7 +105,7 @@ const SignUp = () => {
                 type="submit"
                 variant="elevated"
                 className="mt-6 bg-black text-secondary dark:text-primary hover:bg-pink-400 dark:hover:bg-pink-400 hover:text-black dark:hover:text-black">
-                Create Account
+                Sign In
               </Button>
             </div>
 
@@ -149,4 +126,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default SignIn;
