@@ -1,15 +1,15 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { CustomCategory } from "@/types";
 import CategoryDropdown from "./CategoryDropdown";
 import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
 import { ListFilterIcon } from "lucide-react";
 import CategoriesSidebar from "../CategoriesSidebar";
+import { CategoriesGetManyOutput } from "@/modules/categories/types";
 
 interface Props {
-  data: CustomCategory[];
+  data: CategoriesGetManyOutput;
 }
 
 function Categories({ data }: Props) {

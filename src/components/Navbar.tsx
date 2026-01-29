@@ -80,13 +80,17 @@ const Navbar = () => {
             asChild
             variant="secondary"
             className="border-l border-t-0 border-r-0 border-b-0 rounded-none h-full px-12 bg-background text-lg hover:bg-pink-400 transition-colors">
-            <Link href="/sign-in">Log In</Link>
+            <Link prefetch href="/sign-in">
+              Log In
+            </Link>
           </Button>
           <Button
             asChild
             variant="secondary"
             className="border-l border-t-0 border-r-0 border-b-0 rounded-none h-full px-12 bg-black text-white dark:bg-white dark:text-black text-lg hover:bg-pink-400 dark:hover:bg-pink-400 hover:text-black dark:hover:text-black transition-colors">
-            <Link href="/sign-up">Start Selling</Link>
+            <Link prefetch href="/sign-up">
+              Start Selling
+            </Link>
           </Button>
         </div>
 

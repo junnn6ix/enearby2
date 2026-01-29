@@ -1,7 +1,6 @@
 "use client";
 
 import { Input } from "@/components/ui/input";
-import { CustomCategory } from "@/types";
 import { ListFilterIcon, SearchIcon } from "lucide-react";
 import CategoriesSidebar from "../CategoriesSidebar";
 import { useState } from "react";

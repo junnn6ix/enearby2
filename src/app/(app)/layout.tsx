@@ -1,16 +1,9 @@
 import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import { ThemeProvider } from "@/components/theme-provider";
-import SearchFilters, {
-  SearchFiltersSkeleton,
-} from "@/components/search-filters/SearchFilters";
 import { TRPCReactProvider } from "@/trpc/client";
-import { getQueryClient, trpc } from "@/trpc/server";
-import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
-import { Suspense } from "react";
+import { Toaster } from "@/components/ui/sonner";
 
 const dmSans = DM_Sans({
   variable: "--font-dm-sans",
@@ -28,9 +21,6 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const queryClient = getQueryClient();
-  void queryClient.prefetchQuery(trpc.categories.getMany.queryOptions());
-
   return (
     <>
       <html lang="en" suppressHydrationWarning>
@@ -41,14 +31,8 @@ export default async function RootLayout({
             enableSystem
             disableTransitionOnChange>
             <TRPCReactProvider>
-              <Navbar />
-              <HydrationBoundary state={dehydrate(queryClient)}>
-                <Suspense fallback={<SearchFiltersSkeleton />}>
-                  <SearchFilters />
-                </Suspense>
-              </HydrationBoundary>
               {children}
-              <Footer />
+              <Toaster />
             </TRPCReactProvider>
           </ThemeProvider>
         </body>
