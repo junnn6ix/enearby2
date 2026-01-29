@@ -18,41 +18,26 @@ import { z } from "zod";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { poppins } from "@/components/Navbar";
+import { useTRPC } from "@/trpc/client";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
 const SignIn = () => {
   const router = useRouter();
+  const trpc = useTRPC();
 
-  const login = useMutation({
-    mutationFn: async (values: z.infer<typeof loginSchema>) => {
-      const response = await fetch("/api/users/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(values),
-      });
-
-      if (!response.ok) {
-        const error = await response.json();
-
-        throw new Error(error.message || "Login failed");
-      }
-
-      return response.json();
-    },
-
-    onError: (error) => {
-      toast.error(error.message);
-    },
-
-    onSuccess: () => {
-      toast.success("Login successful");
-      router.push("/");
-    },
-  });
+  const login = useMutation(
+    trpc.auth.login.mutationOptions({
+      onError: (error) => {
+        toast.error(error.message);
+      },
+      onSuccess: () => {
+        toast.success("Login successful");
+        router.push("/");
+      },
+    }),
+  );
 
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
