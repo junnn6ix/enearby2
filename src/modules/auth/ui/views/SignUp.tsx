@@ -152,8 +152,12 @@ const SignUp = () => {
             </div>
 
             <span className="text-xs text-muted-foreground flex items-center justify-center gap-2 underline -mb-2 lg:-mb-6">
-              <Link href="#">License Agreement</Link>
-              <Link href="#">Privacy Policy</Link>
+              <Link href="#" className="hover:text-primary">
+                License Agreement
+              </Link>
+              <Link href="#" className="hover:text-primary">
+                Privacy Policy
+              </Link>
             </span>
           </form>
         </Form>
