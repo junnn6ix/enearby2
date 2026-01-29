@@ -20,20 +20,24 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { poppins } from "@/components/Navbar";
 import { useTRPC } from "@/trpc/client";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
 const SignUp = () => {
   const router = useRouter();
+
   const trpc = useTRPC();
+  const queryClient = useQueryClient();
+
   const register = useMutation(
     trpc.auth.register.mutationOptions({
       onError: (error) => {
         toast.error(error.message);
       },
-      onSuccess: () => {
+      onSuccess: async () => {
         toast.success("Account created successfully");
+        await queryClient.invalidateQueries(trpc.auth.session.queryFilter());
         router.push("/");
       },
     }),
@@ -152,8 +156,12 @@ const SignUp = () => {
             </div>
 
             <span className="text-xs text-muted-foreground flex items-center justify-center gap-2 underline -mb-2 lg:-mb-6">
-              <Link href="#">License Agreement</Link>
-              <Link href="#">Privacy Policy</Link>
+              <Link href="#" className="hover:text-primary">
+                License Agreement
+              </Link>
+              <Link href="#" className="hover:text-primary">
+                Privacy Policy
+              </Link>
             </span>
           </form>
         </Form>

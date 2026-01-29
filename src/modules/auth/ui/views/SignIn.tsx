@@ -13,25 +13,29 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { loginSchema, registerSchema } from "../../types";
+import { loginSchema } from "../../types";
 import { z } from "zod";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { poppins } from "@/components/Navbar";
 import { useTRPC } from "@/trpc/client";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
 const SignIn = () => {
   const router = useRouter();
+
   const trpc = useTRPC();
+  const queryClient = useQueryClient();
+
   const login = useMutation(
     trpc.auth.login.mutationOptions({
       onError: (error) => {
         toast.error(error.message);
       },
-      onSuccess: () => {
+      onSuccess: async () => {
+        await queryClient.invalidateQueries(trpc.auth.session.queryFilter());
         toast.success("Login successful");
         router.push("/");
       },
@@ -124,8 +128,12 @@ const SignIn = () => {
             </div>
 
             <span className="text-xs text-muted-foreground flex items-center justify-center gap-2 underline -mb-2 lg:-mb-6">
-              <Link href="#">License Agreement</Link>&
-              <Link href="#">Privacy Policy</Link>
+              <Link href="#" className="hover:text-primary">
+                License Agreement
+              </Link>
+              <Link href="#" className="hover:text-primary">
+                Privacy Policy
+              </Link>
             </span>
           </form>
         </Form>
