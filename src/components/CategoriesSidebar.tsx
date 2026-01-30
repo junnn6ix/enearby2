@@ -41,7 +41,9 @@ const CategoriesSidebar = ({ open, onOpenChange }: Props) => {
 
   const handleCategoryClick = (category: CategoriesGetManyOutput[1]) => {
     if (category.subcategories && category.subcategories.length > 0) {
-      setParentCategories(category.subcategories as CategoriesGetManyOutput);
+      setParentCategories(
+        category.subcategories as unknown as CategoriesGetManyOutput,
+      );
       setSelectedCategory(category);
     } else {
       if (parentCategories && selectedCategory) {
@@ -65,9 +67,14 @@ const CategoriesSidebar = ({ open, onOpenChange }: Props) => {
     }
   };
 
+  const backgroundColor = selectedCategory?.color || "rgba(255, 255, 255, 0.8)";
+
   return (
     <Sheet open={open} onOpenChange={handleOpenChange}>
       <SheetContent
+        style={{
+          backgroundColor,
+        }}
         side="right"
         className="bg-background/70 backdrop-blur-lg w-[75vw]">
         <SheetHeader className="p-4 border-b">
