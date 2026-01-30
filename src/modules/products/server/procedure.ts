@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+import { Category } from "@/payload-types";
 import { baseProcedure, createTRPCRouter } from "@/trpc/init";
 import { Where } from "payload";
 
@@ -14,24 +15,40 @@ export const productsRouter = createTRPCRouter({
       const where: Where = {};
 
       if (input.category) {
-        // const categoriesData = await ctx.db.find({
-        //   collection: "categories",
-        //   limit: 1,
-        //   pagination: false,
-        //   where: {
-        //     slug: {
-        //       equals: input.category,
-        //     },
-        //   },
-        // });
+        const categoriesData = await ctx.db.find({
+          collection: "categories",
+          limit: 1,
+          depth: 1,
+          pagination: false,
+          where: {
+            slug: {
+              equals: input.category,
+            },
+          },
+        });
 
-        // const category = categoriesData.docs[0];
+        const formatedData = categoriesData.docs.map((doc) => ({
+          ...doc,
+          subcategories: (doc.subcategories?.docs ?? []).map((doc) => ({
+            // because of 'depth: 1', we are confident 'doc' will be a type of 'Category'
+            ...(doc as Category),
+            subcategories: undefined,
+          })),
+        }));
 
-        // if (category) {
+        const subcategoriesSlugs = [];
+        const parentCategory = formatedData[0];
+
+        if (parentCategory) {
+          subcategoriesSlugs.push(
+            ...parentCategory.subcategories.map(
+              (subcategory) => subcategory.slug,
+            ),
+          );
+        }
         where["category.slug"] = {
-          equals: input.category,
+          in: [parentCategory.slug, ...subcategoriesSlugs],
         };
-        //   }
       }
 
       const data = await ctx.db.find({
