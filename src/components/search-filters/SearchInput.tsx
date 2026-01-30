@@ -1,13 +1,13 @@
 "use client";
 
 import { Input } from "@/components/ui/input";
-import { BookmarkCheckIcon, ListFilterIcon, SearchIcon } from "lucide-react";
-import CategoriesSidebar from "../CategoriesSidebar";
-import { useState } from "react";
-import { Button } from "../ui/button";
 import { useTRPC } from "@/trpc/client";
 import { useQuery } from "@tanstack/react-query";
+import { BookmarkCheckIcon, ListFilterIcon, SearchIcon } from "lucide-react";
 import Link from "next/link";
+import { useState } from "react";
+import CategoriesSidebar from "../CategoriesSidebar";
+import { Button } from "../ui/button";
 
 interface Props {
   disabled?: boolean;
@@ -28,7 +28,7 @@ const SearchInput = ({ disabled }: Props) => {
         <Input
           disabled={disabled}
           placeholder="Search..."
-          className="pl-10 py-4.75 focus-visible:translate-x-0 focus-visible:translate-y-0 focus-visible:shadow-none dark:focus-visible:shadow-none dark:focus-visible:translate-x-0 dark:focus-visible:translate-y-0 focus-visible:ring-1 dark:focus-visible:ring-1"
+          className="bg-primary-foreground dark:bg-background pl-10 py-4.75 focus-visible:translate-x-0 focus-visible:translate-y-0 focus-visible:shadow-none dark:focus-visible:shadow-none dark:focus-visible:translate-x-0 dark:focus-visible:translate-y-0 focus-visible:ring-1 dark:focus-visible:ring-1"
         />
       </div>
       <Button

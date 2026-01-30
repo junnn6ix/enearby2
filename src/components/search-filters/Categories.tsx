@@ -1,12 +1,13 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import CategoryDropdown from "./CategoryDropdown";
-import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
-import { ListFilterIcon } from "lucide-react";
-import CategoriesSidebar from "../CategoriesSidebar";
 import { CategoriesGetManyOutput } from "@/modules/categories/types";
+import { ListFilterIcon } from "lucide-react";
+import { useParams } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
+import CategoriesSidebar from "../CategoriesSidebar";
+import { Button } from "../ui/button";
+import CategoryDropdown from "./CategoryDropdown";
 
 interface Props {
   data: CategoriesGetManyOutput;
@@ -17,11 +18,14 @@ function Categories({ data }: Props) {
   const measureRef = useRef<HTMLDivElement>(null);
   const viewAllRef = useRef<HTMLDivElement>(null);
 
+  const params = useParams();
+
   const [visibleCount, setVisibleCount] = useState(data.length);
   const [isAnyHovered, setIsAnyHovered] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-  const activeCategory = "all";
+  const categoryParam = params.category as string | undefined;
+  const activeCategory = categoryParam || "all";
 
   const activeCategoryIndex = data.findIndex(
     (cat) => cat.slug === activeCategory,
@@ -105,10 +109,10 @@ function Categories({ data }: Props) {
             onClick={() => setIsSidebarOpen(true)}
             variant="elevated"
             className={cn(
-              "rounded-full border-transparent dark:border-transparent hover:border-primary dark:hover:border-primary h-11 px-4 hover:bg-background",
+              "rounded-full bg-transparent border-transparent dark:border-transparent hover:border-primary dark:hover:border-primary h-11 px-4 hover:bg-background",
               isActiveCategoryHidden &&
                 !isAnyHovered &&
-                "bg-transparent border-primary",
+                "bg-background border-primary",
             )}>
             View All
             <ListFilterIcon className="ml-2" />

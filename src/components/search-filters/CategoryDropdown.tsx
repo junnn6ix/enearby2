@@ -2,12 +2,12 @@
 
 import { useRef, useState } from "react";
 
-import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { useDropdownPosition } from "@/hooks/use-dropdown-position";
-import SubcategoryMenu from "./SubcategoryMenu";
-import Link from "next/link";
+import { cn } from "@/lib/utils";
 import { CategoriesGetManyOutput } from "@/modules/categories/types";
+import Link from "next/link";
+import SubcategoryMenu from "./SubcategoryMenu";
 
 interface Props {
   category: CategoriesGetManyOutput[1];
@@ -18,7 +18,7 @@ interface Props {
 const CategoryDropdown = ({
   category,
   isActive,
-  isNavigationHovered,
+  // isNavigationHovered,
 }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -49,14 +49,14 @@ const CategoryDropdown = ({
       onMouseLeave={onMouseLeave}
       // onClick={toggleDropdown}
     >
-      <div className="relative">
+      <div className="relative ">
         <Button
           variant="elevated"
           className={cn(
-            "rounded-full border-transparent dark:border-transparent hover:border-primary dark:hover:border-primary h-11 px-4 hover:bg-background",
+            "bg-transparent rounded-full border-transparent dark:border-transparent hover:border-primary dark:hover:border-primary h-11 px-4 hover:bg-background",
             isActive && "bg-background border-primary dark:border-primary",
             isOpen &&
-              "bg-background border-primary dark:border-primary shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] -translate-x-[4px] -translate-y-[4px] border dark:bg-background dark:shadow-primary cursor-pointer",
+              "bg-background border-primary dark:border-primary shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] -translate-x-1 -translate-y-1 border dark:bg-background dark:shadow-primary cursor-pointer",
           )}>
           <Link href={`/${category.slug === "all" ? "" : category.slug}`}>
             {category.name}

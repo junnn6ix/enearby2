@@ -1,3 +1,11 @@
+import { CategoriesGetManyOutput } from "@/modules/categories/types";
+import { useTRPC } from "@/trpc/client";
+import { useQuery } from "@tanstack/react-query";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { poppins } from "./Navbar";
+import { ScrollArea } from "./ui/scroll-area";
 import {
   Sheet,
   SheetContent,
@@ -5,14 +13,6 @@ import {
   SheetHeader,
   SheetTitle,
 } from "./ui/sheet";
-import { poppins } from "./Navbar";
-import { ScrollArea } from "./ui/scroll-area";
-import { useState } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { useTRPC } from "@/trpc/client";
-import { useQuery } from "@tanstack/react-query";
-import { CategoriesGetManyOutput } from "@/modules/categories/types";
 
 interface Props {
   open: boolean;
