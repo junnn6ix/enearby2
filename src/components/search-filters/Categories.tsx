@@ -94,6 +94,8 @@ function Categories({ data }: Props) {
         className="flex flex-nowrap items-center"
         onMouseEnter={() => setIsAnyHovered(true)}
         onMouseLeave={() => setIsAnyHovered(false)}>
+        {/* TODO: hardcoded "all" button */}
+
         {data.slice(0, visibleCount).map((category) => (
           <div key={category.id} className="">
             <CategoryDropdown
