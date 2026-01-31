@@ -23,7 +23,7 @@ const Layout = async ({ children }: Props) => {
             <SearchFilters />
           </Suspense>
         </HydrationBoundary>
-        <div className="mx-auto w-[95vw] lg:w-[90vw]">{children}</div>
+        <div className="w-[95vw] mx-auto">{children}</div>
       </div>
       <Footer />
     </div>
