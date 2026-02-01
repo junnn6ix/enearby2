@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { ChevronDownIcon, ChevronRightIcon } from "lucide-react";
 import { useState } from "react";
 import PriceFilter from "./PriceFilter";
+import TagsFilter from "./TagsFilter";
 import { Button } from "./ui/button";
 
 interface ProductFilterProps {
@@ -63,12 +64,18 @@ const ProductFilters = () => {
           Clear
         </Button>
       </div>
-      <ProductFilter title="Price">
+      <ProductFilter title="Price" className="border-b-0">
         <PriceFilter
           minPrice={filters.minPrice}
           maxPrice={filters.maxPrice}
           onMinPriceChange={(value) => onChange("minPrice", value)}
           onMaxPriceChange={(value) => onChange("maxPrice", value)}
+        />
+      </ProductFilter>
+      <ProductFilter title="Tags" className="border-b-0">
+        <TagsFilter
+          value={filters.tags}
+          onChange={(value) => onChange("tags", value)}
         />
       </ProductFilter>
     </div>
