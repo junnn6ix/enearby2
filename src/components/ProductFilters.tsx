@@ -46,6 +46,7 @@ const ProductFilters = () => {
     setFilters({
       minPrice: null,
       maxPrice: null,
+      tags: [],
     });
   };
 

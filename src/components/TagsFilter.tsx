@@ -24,6 +24,14 @@ const TagsFilter = ({ value, onChange }: TagsFilterProps) => {
         },
       ),
     );
+
+  const onClick = (tag: string) => {
+    if (value?.includes(tag)) {
+      onChange(value?.filter((t) => t !== tag) || []);
+    } else {
+      onChange([...(value || []), tag]);
+    }
+  };
   return (
     <div className="flex flex-wrap gap-2">
       {isLoading ? (
@@ -36,7 +44,7 @@ const TagsFilter = ({ value, onChange }: TagsFilterProps) => {
             <Button
               key={tag.id}
               className="cursor-pointer rounded-full"
-              onClick={() => {}}
+              onClick={() => onClick(tag.name)}
               variant={"outline"}
               size="sm">
               <Hash />
@@ -48,7 +56,7 @@ const TagsFilter = ({ value, onChange }: TagsFilterProps) => {
       {hasNextPage && (
         <Button
           variant="ghost"
-          className="underline p-0 "
+          className="underline "
           disabled={isFetchingNextPage}
           onClick={() => fetchNextPage()}>
           Load More...
