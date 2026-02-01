@@ -3,10 +3,10 @@ import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 
 interface Props {
-  minPrice?: string | null;
-  maxPrice?: string | null;
-  onMinPriceChange: (value: string) => void;
-  onMaxPriceChange: (value: string) => void;
+  minPrice?: number | null;
+  maxPrice?: number | null;
+  onMinPriceChange: (value: number | null) => void;
+  onMaxPriceChange: (value: number | null) => void;
 }
 
 export const formatAsCurrency = (value: string) => {
@@ -39,13 +39,13 @@ const PriceFilter = ({
   const handleMinPriceChange = (e: ChangeEvent<HTMLInputElement>) => {
     // Get the raw input value and extract only numeric values
     const numericValue = e.target.value.replace(/[^0-9]/g, "");
-    onMinPriceChange(numericValue);
+    onMinPriceChange(numericValue ? parseInt(numericValue, 10) : null);
   };
 
   const handleMaxPriceChange = (e: ChangeEvent<HTMLInputElement>) => {
     // Get the raw input value and extract only numeric values
     const numericValue = e.target.value.replace(/[^0-9]/g, "");
-    onMaxPriceChange(numericValue);
+    onMaxPriceChange(numericValue ? parseInt(numericValue, 10) : null);
   };
 
   return (
@@ -55,7 +55,7 @@ const PriceFilter = ({
         <Input
           type="text"
           placeholder="$0"
-          value={minPrice ? formatAsCurrency(minPrice) : ""}
+          value={minPrice ? formatAsCurrency(String(minPrice)) : ""}
           onChange={handleMinPriceChange}
         />
       </div>
@@ -64,7 +64,7 @@ const PriceFilter = ({
         <Input
           type="text"
           placeholder="&infin;"
-          value={maxPrice ? formatAsCurrency(maxPrice) : ""}
+          value={maxPrice ? formatAsCurrency(String(maxPrice)) : ""}
           onChange={handleMaxPriceChange}
         />
       </div>

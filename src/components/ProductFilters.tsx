@@ -34,6 +34,13 @@ const ProductFilter = ({ title, className, children }: ProductFilterProps) => {
 const ProductFilters = () => {
   const [filters, setFilters] = useProductFilters();
 
+  const onClear = () => {
+    setFilters({
+      minPrice: null,
+      maxPrice: null,
+    });
+  };
+
   const onChange = (key: keyof typeof filters, value: unknown) => {
     setFilters({ ...filters, [key]: value });
   };
@@ -44,7 +51,7 @@ const ProductFilters = () => {
         <Button
           variant="ghost"
           className="underline p-2 text-md"
-          onClick={() => {}}>
+          onClick={onClear}>
           Clear
         </Button>
       </div>
