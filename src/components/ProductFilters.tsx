@@ -35,11 +35,17 @@ const ProductFilter = ({ title, className, children }: ProductFilterProps) => {
 const ProductFilters = () => {
   const [filters, setFilters] = useProductFilters();
 
-  const hasAnyFilters = Object.entries(filters).some(([value]) => {
+  const hasAnyFilters = Object.entries(filters).some(([key, value]) => {
+    if (key === "tags" && Array.isArray(value)) {
+      return value.length > 0;
+    }
+    if (typeof value === "number") {
+      return true;
+    }
     if (typeof value === "string") {
       return value !== "";
     }
-    return value !== null;
+    return value !== null && value !== undefined;
   });
 
   const onClear = () => {
