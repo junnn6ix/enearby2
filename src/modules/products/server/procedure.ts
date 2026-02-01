@@ -11,7 +11,7 @@ export const productsRouter = createTRPCRouter({
         category: z.string().nullable().optional(),
         minPrice: z.number().nullable().optional(),
         maxPrice: z.number().nullable().optional(),
-        tags: z.array(z.string()).optional(),
+        tags: z.array(z.string()).nullable().optional(),
       }),
     )
     .query(async ({ ctx, input }) => {
