@@ -45,10 +45,10 @@ const TagsFilter = ({ value, onChange }: TagsFilterProps) => {
               key={tag.id}
               className="cursor-pointer rounded-full"
               onClick={() => onClick(tag.name)}
-              variant={"outline"}
+              variant={value?.includes(tag.name) ? "default" : "outline"}
               size="sm">
               <Hash />
-              <p>{tag.name}</p>
+              {tag.name}
             </Button>
           )),
         )
