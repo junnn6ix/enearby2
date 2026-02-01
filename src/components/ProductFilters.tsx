@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { ChevronDownIcon, ChevronRightIcon } from "lucide-react";
 import { useState } from "react";
 import PriceFilter from "./PriceFilter";
+import TagsFilter from "./TagsFilter";
 import { Button } from "./ui/button";
 
 interface ProductFilterProps {
@@ -34,6 +35,27 @@ const ProductFilter = ({ title, className, children }: ProductFilterProps) => {
 const ProductFilters = () => {
   const [filters, setFilters] = useProductFilters();
 
+  const hasAnyFilters = Object.entries(filters).some(([key, value]) => {
+    if (key === "tags" && Array.isArray(value)) {
+      return value.length > 0;
+    }
+    if (typeof value === "number") {
+      return true;
+    }
+    if (typeof value === "string") {
+      return value !== "";
+    }
+    return value !== null && value !== undefined;
+  });
+
+  const onClear = () => {
+    setFilters({
+      minPrice: null,
+      maxPrice: null,
+      tags: [],
+    });
+  };
+
   const onChange = (key: keyof typeof filters, value: unknown) => {
     setFilters({ ...filters, [key]: value });
   };
@@ -42,18 +64,25 @@ const ProductFilters = () => {
       <div className="p-4 border-b flex items-center justify-between">
         <p className="font-medium">Filters</p>
         <Button
+          disabled={!hasAnyFilters}
           variant="ghost"
           className="underline p-2 text-md"
-          onClick={() => {}}>
+          onClick={onClear}>
           Clear
         </Button>
       </div>
-      <ProductFilter title="Price">
+      <ProductFilter title="Price" className="border-b-0">
         <PriceFilter
           minPrice={filters.minPrice}
           maxPrice={filters.maxPrice}
           onMinPriceChange={(value) => onChange("minPrice", value)}
           onMaxPriceChange={(value) => onChange("maxPrice", value)}
+        />
+      </ProductFilter>
+      <ProductFilter title="Tags" className="border-b-0">
+        <TagsFilter
+          value={filters.tags}
+          onChange={(value) => onChange("tags", value)}
         />
       </ProductFilter>
     </div>
