@@ -1,17 +1,17 @@
 "use client";
 
-import Link from "next/link";
 import { Poppins } from "next/font/google";
-import React, { useState } from "react";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
+import React, { useState } from "react";
 
 import { cn } from "@/lib/utils";
-import { Button } from "./ui/button";
-import NavbarSidebar from "./NavbarSidebar";
-import { MenuIcon } from "lucide-react";
-import { ModeToggle } from "./mode-toggle";
 import { useTRPC } from "@/trpc/client";
 import { useQuery } from "@tanstack/react-query";
+import { MenuIcon } from "lucide-react";
+import { ModeToggle } from "./mode-toggle";
+import NavbarSidebar from "./NavbarSidebar";
+import { Button } from "./ui/button";
 
 export const poppins = Poppins({
   subsets: ["latin"],
@@ -80,7 +80,7 @@ const Navbar = () => {
         </div>
 
         <div className="hidden lg:flex items-center h-full">
-          <ModeToggle />
+          {/* <ModeToggle /> */}
 
           {session.data?.user ? (
             <Button
