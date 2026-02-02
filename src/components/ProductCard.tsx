@@ -62,9 +62,15 @@ const ProductCard = ({
           </div>
           <div className="p-4 ">
             <div className="relative px-2 py-1 border bg-pink-400 w-fit">
-              <p className="flex items-center gap-1 text-sm font-medium">
-                <DollarSign className="size-3" />
-                {price}
+              <p className="flex items-center gap-1 text-md font-medium">
+                <DollarSign className="size-3.5" />
+                {new Intl.NumberFormat("en-US", {
+                  style: "currency",
+                  currency: "USD",
+                  maximumFractionDigits: 0,
+                })
+                  .format(Number(price))
+                  .replace("$", "")}
               </p>
             </div>
           </div>
