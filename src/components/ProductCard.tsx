@@ -82,8 +82,8 @@ const ProductCard = ({
 
 export default ProductCard;
 
-export const ProductSkeleton = () => {
+export const ProductCardSkeleton = () => {
   return (
-    <div className="w-full aspect-3/4 bg-secondary-foreground rounded-md animate-pulse" />
+    <div className="w-full aspect-3/4 bg-muted-foreground rounded-md animate-pulse" />
   );
 };

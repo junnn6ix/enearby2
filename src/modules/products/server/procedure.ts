@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+import { DEFAULT_LIMIT } from "@/constant";
 import { Category, Media } from "@/payload-types";
 import { baseProcedure, createTRPCRouter } from "@/trpc/init";
 import { Sort, Where } from "payload";
@@ -9,6 +10,8 @@ export const productsRouter = createTRPCRouter({
   getMany: baseProcedure
     .input(
       z.object({
+        cursor: z.number().default(1),
+        limit: z.number().default(DEFAULT_LIMIT),
         category: z.string().nullable().optional(),
         minPrice: z.number().nullable().optional(),
         maxPrice: z.number().nullable().optional(),
@@ -96,9 +99,10 @@ export const productsRouter = createTRPCRouter({
       const data = await ctx.db.find({
         collection: "products",
         depth: 1, // populate "category", "image"
-        limit: 100, // Fetch all categories (default is 10)
         sort,
         where,
+        page: input.cursor,
+        limit: input.limit,
       });
 
       return {
