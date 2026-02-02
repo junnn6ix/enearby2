@@ -1,5 +1,5 @@
-import ProductList, { ProductSkeleton } from "@/components/ProductList";
-import { loadProductFilters } from "@/hooks/use-product-filters";
+import ProductListView from "@/components/ProductListView";
+import { loadProductFilters } from "@/modules/products/searchParams";
 import { trpc } from "@/trpc/server";
 import {
   dehydrate,
@@ -7,7 +7,6 @@ import {
   QueryClient,
 } from "@tanstack/react-query";
 import type { SearchParams } from "nuqs/server";
-import { Suspense } from "react";
 
 interface Props {
   params: Promise<{ subcategory: string }>;
@@ -17,6 +16,7 @@ interface Props {
 const Page = async ({ params, searchParams }: Props) => {
   const { subcategory } = await params;
   const filters = await loadProductFilters(searchParams);
+  console.log(JSON.stringify(filters), "FROM RSC");
 
   const queryClient = new QueryClient();
 
@@ -29,9 +29,7 @@ const Page = async ({ params, searchParams }: Props) => {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <Suspense fallback={<ProductSkeleton />}>
-        <ProductList category={subcategory} />
-      </Suspense>
+      <ProductListView category={subcategory} />
     </HydrationBoundary>
   );
 };
