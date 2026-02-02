@@ -1,4 +1,5 @@
 import { DEFAULT_LIMIT } from "@/constant";
+import { cn } from "@/lib/utils";
 import { useTRPC } from "@/trpc/client";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { Hash, LoaderIcon } from "lucide-react";
@@ -43,9 +44,12 @@ const TagsFilter = ({ value, onChange }: TagsFilterProps) => {
           page.docs.map((tag) => (
             <Button
               key={tag.id}
-              className="cursor-pointer rounded-full"
+              className={cn(
+                "cursor-pointer rounded-md ",
+                value?.includes(tag.name) && "rounded-full",
+              )}
               onClick={() => onClick(tag.name)}
-              variant={value?.includes(tag.name) ? "default" : "elevated"}
+              variant={value?.includes(tag.name) ? "default" : "outline"}
               size="sm">
               <Hash />
               {tag.name}
